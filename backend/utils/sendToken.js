@@ -1,4 +1,4 @@
-const sendToken = (user, statusCode, res) => {
+const sendToken = (user, statusCode, res, message) => {
   const token = user.getJWTToken();
   const options = {
     expires: new Date(
@@ -9,6 +9,7 @@ const sendToken = (user, statusCode, res) => {
   };
   res.status(statusCode).cookie("token", token, options).json({
     success: true,
+    message,
     user,
     token,
   });

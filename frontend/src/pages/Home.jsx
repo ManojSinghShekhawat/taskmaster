@@ -5,6 +5,7 @@ import AssignedTasks from "../components/AssignedTasks";
 import { Text, Heading, HStack, VStack, Box } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { axiosInstance } from "../utils/axiosInstance";
+import { useSelector } from "react-redux";
 
 export const Home = () => {
   const [currentProjects, setCurrentProjects] = useState([]);

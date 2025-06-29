@@ -17,14 +17,6 @@ const columnTemplate = "2fr 2fr"; // Adjust column widths as needed
 
 const headers = ["Project Name", "Description"];
 
-const data = [
-  {
-    ProjectName: "Task Manager",
-    Description:
-      "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minima rerum eos reiciendis atque ab placeat veritatis obcaecati nemo, eveniet quasi delectus dolor! Assumenda necessitatibus fugit sapiente consectetur aspernatur exercitationem laudantium?",
-  },
-];
-
 const Projects = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [projects, setProjects] = useState([]);

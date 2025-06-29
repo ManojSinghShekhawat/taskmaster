@@ -92,10 +92,12 @@ export const Header = () => {
               <MdHelpOutline />
               <Menu>
                 <MenuButton>
-                  <Avatar size={"sm"} />
+                  <Avatar size={"sm"} src="https://bit.ly/sage-adebayo" />
                 </MenuButton>
                 <MenuList>
-                  <MenuItem>Profile</MenuItem>
+                  <MenuItem>
+                    <Link to="/profile">Profile</Link>
+                  </MenuItem>
                   <MenuItem>Settings</MenuItem>
                   <MenuItem onClick={handleLogout}>Logout</MenuItem>
                 </MenuList>

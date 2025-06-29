@@ -1,6 +1,7 @@
 import { Box, Grid, Text, Heading } from "@chakra-ui/react";
 const columnTemplate = "1fr 2fr 2fr 1fr"; // Adjust column widths as needed
 const headers = ["Project", "Status", "Due Date", "Progress"];
+import { Link } from "react-router-dom";
 
 const CurrentProjects = ({ currentProjects }) => {
   return (
@@ -31,7 +32,7 @@ const CurrentProjects = ({ currentProjects }) => {
             borderBottom="1px solid #e2e8f0"
             p={2}
           >
-            <Text>{item.title}</Text>
+            <Link to={`/projects/${item._id}`}>{item.title}</Link>
 
             <Text>{item.status}</Text>
 

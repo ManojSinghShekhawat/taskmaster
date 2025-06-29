@@ -1,4 +1,5 @@
 import { Box, Grid, Text, Heading } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 const columnTemplate = "1fr 2fr 2fr 1fr"; // Adjust column widths as needed
 const headers = ["Task", "Project", , "Due Date", "Priority"];
 
@@ -31,7 +32,7 @@ const AssignedTasks = ({ myTasks }) => {
             borderBottom="1px solid #e2e8f0"
             p={2}
           >
-            <Text>{item.task.title}</Text>
+            <Link to={`/tasks/${item.task._id}`}>{item.task.title}</Link>
             <Text>{item.project.title}</Text>
 
             <Text>{item.task.dueDate.split("T")[0]}</Text>

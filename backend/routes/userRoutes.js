@@ -10,15 +10,21 @@ const {
   loginUser,
   checkAuthStatus,
   logoutUser,
+  updateUserPassword,
 } = require("../controllers/userController");
 
 const isAuthenticated = require("../middleware/isAuthenticated");
 
 router.route("/new").post(createUser);
 router.route("/login").post(loginUser);
-router.route("/logout").post(logoutUser);
+router.route("/logout").post(isAuthenticated, logoutUser);
 router.route("/authstatus").get(isAuthenticated, checkAuthStatus);
-router.route("/").get(getAllUsers);
-router.route("/:id").get(getSingleUser).put(updateUser).delete(deleteUser);
+router.route("/").get(isAuthenticated, getAllUsers);
+router
+  .route("/:id")
+  .get(isAuthenticated, getSingleUser)
+  // .put(isAuthenticated, updateUser)
+  .put(isAuthenticated, updateUserPassword)
+  .delete(isAuthenticated, deleteUser);
 
 module.exports = router;
