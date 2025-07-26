@@ -16,6 +16,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { axiosInstance } from "../utils/axiosInstance";
 import { useNavigate } from "react-router-dom";
+import profilePic from "../assets/profilepic.jpg";
 
 export const Header = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -92,7 +93,7 @@ export const Header = () => {
               <MdHelpOutline />
               <Menu>
                 <MenuButton>
-                  <Avatar size={"sm"} src="https://bit.ly/sage-adebayo" />
+                  <Avatar size={"sm"} src={profilePic} />
                 </MenuButton>
                 <MenuList>
                   <MenuItem>

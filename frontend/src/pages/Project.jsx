@@ -6,7 +6,7 @@ import { Box } from "@chakra-ui/react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { axiosInstance } from "../utils/axiosInstance";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { projectLoad } from "../redux/slices/projectSlice";
 
 const Project = () => {
@@ -24,6 +24,7 @@ const Project = () => {
       try {
         const res = await axiosInstance.get(`/api/v1/projects/${id.id}`);
         setProject(res.data.project);
+
         dispatch(projectLoad(res.data.project));
       } catch (error) {
         console.log(error);
@@ -31,7 +32,18 @@ const Project = () => {
     };
     if (id) fetchProject();
   }, [id]);
+  const allTasks = useSelector((state) => state.task.tasks);
+  const currentPorjectTasks = allTasks.filter(
+    (task) => task.project._id == id.id
+  );
+  const currentProjectCompletedTasks = allTasks.filter(
+    (task) => task.project._id == id.id && task.status === "Completed"
+  );
+  const progress = Math.round(
+    (currentProjectCompletedTasks.length / currentPorjectTasks.length) * 100
+  );
 
+  console.log(progress);
   return (
     <>
       <Box m={4} display={"flex"} flexDirection={"row"}>

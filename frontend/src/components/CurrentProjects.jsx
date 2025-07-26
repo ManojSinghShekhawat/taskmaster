@@ -1,7 +1,9 @@
-import { Box, Grid, Text, Heading } from "@chakra-ui/react";
-const columnTemplate = "1fr 2fr 2fr 1fr"; // Adjust column widths as needed
+import { Box, Grid, Text, Heading, Button } from "@chakra-ui/react";
+const columnTemplate = "2fr 2fr 2fr 1fr"; // Adjust column widths as needed
 const headers = ["Project", "Status", "Due Date", "Progress"];
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { axiosInstance } from "../utils/axiosInstance";
 
 const CurrentProjects = ({ currentProjects }) => {
   return (
@@ -42,6 +44,7 @@ const CurrentProjects = ({ currentProjects }) => {
           </Grid>
         ))}
       </Box>
+      <Button onClick={() => fetchAllTasks(currentProjects)}>View All</Button>
     </>
   );
 };

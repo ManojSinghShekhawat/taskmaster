@@ -3,6 +3,8 @@ import Login from "./components/login";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { authStatus } from "./redux/slices/authSlice";
+import { getTasks } from "./redux/slices/taskSlice";
+import { fetchAllUsers } from "./redux/slices/usersSlice";
 import { Home } from "./pages/Home";
 import { Routes, Route } from "react-router-dom";
 import Projects from "./pages/Projects";
@@ -15,12 +17,21 @@ import LandingPage from "./components/LandingPage";
 import WorkInProgress from "./components/WorkInProgress";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Profile from "./pages/Profile";
+import Kanban from "./pages/Kanban";
 
 function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(authStatus());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getTasks());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(fetchAllUsers());
   }, [dispatch]);
   return (
     <>
@@ -97,6 +108,15 @@ function App() {
           element={
             <ProtectedRoute>
               <Profile />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/kanban"
+          element={
+            <ProtectedRoute>
+              <Kanban />
             </ProtectedRoute>
           }
         />

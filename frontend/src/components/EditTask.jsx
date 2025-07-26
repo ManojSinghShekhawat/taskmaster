@@ -27,13 +27,14 @@ const EditTask = () => {
     dueDate: "",
     assignees: [],
     tags: [],
+    project: "",
   });
 
   useEffect(() => {
     const fetchTask = async () => {
       try {
         const res = await axiosInstance.get(`/api/v1/tasks/${id}`);
-        const data = res.data.task;
+        const data = res.data.tasksWithProjects;
         const assignees = data.assignees
           .map((id) => {
             const userData = users.find((u) => u._id === id);
@@ -51,6 +52,7 @@ const EditTask = () => {
           dueDate: data.dueDate,
           assignees,
           tags: data.tags.map((tag) => tag.name),
+          project: data.project._id,
         });
       } catch (error) {
         console.log(error);

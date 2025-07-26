@@ -5,6 +5,7 @@ const errorMiddleware = require("./middleware/errorMiddleware");
 const taskRoutes = require("./routes/taskRoutes");
 const userRoutes = require("./routes/userRoutes");
 const projectRoutes = require("./routes/projectRoutes");
+const commentRoutes = require("./routes/commentRoutes");
 require("dotenv").config({ path: "./.env" });
 
 const app = express();
@@ -25,6 +26,7 @@ app.use(
 app.use("/api/v1/tasks", taskRoutes);
 app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/projects", projectRoutes);
+app.use("/api/v1/comments", commentRoutes);
 
 app.use(errorMiddleware);
 module.exports = app;

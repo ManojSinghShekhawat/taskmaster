@@ -5,20 +5,19 @@ import AssignedTasks from "../components/AssignedTasks";
 import { Text, Heading, HStack, VStack, Box } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { axiosInstance } from "../utils/axiosInstance";
-import { useSelector } from "react-redux";
 
 export const Home = () => {
   const [currentProjects, setCurrentProjects] = useState([]);
   const [myTasks, setMyTasks] = useState([]);
   const totalTasks = myTasks.length;
   const openTasks = myTasks.filter(
-    (task) => task.task.status === "Not Started"
+    (task) => task.status === "Not Started"
   ).length;
   const inProgressTasks = myTasks.filter(
-    (task) => task.task.status === "In Progress"
+    (task) => task.status === "In Progress"
   ).length;
   const completedTasks = myTasks.filter(
-    (task) => task.task.status === "Completed"
+    (task) => task.status === "Completed"
   ).length;
 
   useEffect(() => {
@@ -39,6 +38,7 @@ export const Home = () => {
     const fetchTasks = async () => {
       try {
         const res = await axiosInstance.get("/api/v1/tasks/mytasks");
+
         setMyTasks(res.data.tasksWithProjects);
       } catch (error) {
         console.log(error);

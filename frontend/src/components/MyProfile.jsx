@@ -14,6 +14,7 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { axiosInstance } from "../utils/axiosInstance";
+import profilePic from "../assets/profilepic.jpg";
 
 const MyProfile = () => {
   const [profileData, setProfileData] = useState({
@@ -49,7 +50,7 @@ const MyProfile = () => {
     <Box m={"auto"} width={"70%"} mt={4}>
       <Heading mb={4}>My Profile</Heading>
       <HStack>
-        <Avatar name={user.name} src={user.avatar} size={"lg"} />
+        <Avatar name={user.name} src={profilePic} size={"lg"} />
         <VStack ml={1} alignItems={"flex-start"}>
           <Text> {user.name}</Text>
           <Text mt={-2}> {user.email}</Text>

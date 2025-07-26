@@ -25,7 +25,7 @@ const Projects = () => {
     const fetchProjects = async () => {
       try {
         const res = await axiosInstance.get(
-          "/api/v1/projects/myprojects/created "
+          "/api/v1/projects/myprojects/created"
         );
         setProjects(res.data.projects);
       } catch (error) {

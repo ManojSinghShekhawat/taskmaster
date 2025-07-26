@@ -37,26 +37,37 @@ exports.getAllTasks = asyncErrorHandler(async (req, res) => {
 
 //get single task
 exports.getSingleTask = asyncErrorHandler(async (req, res) => {
-  const task = await Task.findById(req.params.id);
-  res
-    .status(200)
-    .json({ success: true, message: "task created successfully", task });
+  const tasksWithProjects = await Task.findById(req.params.id)
+    .populate("project")
+    .exec();
+  res.status(200).json({
+    success: true,
+    message: "task created successfully",
+    tasksWithProjects,
+  });
 });
 
 //update task
 exports.updateTask = asyncErrorHandler(async (req, res) => {
+  const ExistingTask = await Task.findById(req.params.id);
+  if (!ExistingTask) {
+    return res.status(404).json({ success: false, message: "Task not found" });
+  }
+
   const taskData = {
-    title: req.body.title,
-    description: req.body.description,
-    status: req.body.status,
-    dueDate: req.body.dueDate,
-    priority: req.body.priority,
-    user: req.user._id,
-    assignees: req.body.assignees.map(
-      (assignee) => new mongoose.Types.ObjectId(assignee.value)
-    ),
-    tags: req.body.tags,
-    project: new mongoose.Types.ObjectId(req.body.project),
+    title: req.body.title ?? ExistingTask.title,
+    description: req.body.description ?? ExistingTask.description,
+    status: req.body.status ?? ExistingTask.status,
+    dueDate: req.body.dueDate ?? ExistingTask.dueDate,
+    priority: req.body.priority ?? ExistingTask.priority,
+    user: req.user._id ?? ExistingTask.user,
+    assignees: req.body.assignees
+      ? req.body.assignees.map((a) => new mongoose.Types.ObjectId(a.value))
+      : ExistingTask.assignees,
+    tags: req.body.tags ?? ExistingTask.tags,
+    project: req.body.project
+      ? new mongoose.Types.ObjectId(req.body.project)
+      : ExistingTask.project,
   };
 
   const task = await Task.findByIdAndUpdate(req.params.id, taskData, {
@@ -85,21 +96,26 @@ exports.deleteAllTasks = asyncErrorHandler(async (req, res) => {
 
 //get tasks belongs to user
 exports.getTasksByUser = asyncErrorHandler(async (req, res) => {
-  const tasks = await Task.find({ user: req.user._id });
-
-  const tasksWithProjects = await Promise.all(
-    tasks.map(async (task) => {
-      const project = await Project.findById(task.project);
-      return {
-        task: task,
-        project: project,
-      };
-    })
-  );
+  const tasksWithProjects = await Task.find({ user: req.user._id })
+    .populate("project")
+    .exec();
 
   res.status(200).json({
     success: true,
     message: "task created successfully",
+    tasksWithProjects,
+  });
+});
+
+//get tasks belongs to project
+exports.getTasksByProject = asyncErrorHandler(async (req, res) => {
+  const tasksWithProjects = await Task.find({ project: req.params.id })
+    .populate("project")
+    .exec();
+
+  res.status(200).json({
+    success: true,
+    message: "task fetched successfully",
     tasksWithProjects,
   });
 });
